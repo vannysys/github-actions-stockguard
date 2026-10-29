@@ -3,29 +3,29 @@
 **Estudiante:** Luis Jaraba (`vannysys`)
 **Repositorio:** https://github.com/vannysys/github-actions-stockguard
 
-> Antes de entregar: reemplazar cada `[ ... ]` con el dato real de tus corridas
-> (número de run, hash del commit, link). Las respuestas ya asumen lo que vas a ver.
-
 ## Evidencias
 
 | Evidencia | Link |
 | --- | --- |
-| Ejecución exitosa inicial | [link al Run #1] |
-| Ejecución fallida intencional | [link al Run #2] |
-| Ejecución corregida (verde otra vez) | [link al Run #3] |
-| Pull Request con los checks de Actions | [link al PR #1] |
-| Ejecución manual (`workflow_dispatch`) | [link al Run #N] |
-| Commit/PR con la regla propia (sobrestock) | [link al PR #1] |
+| Ejecución exitosa inicial (Run #2) | https://github.com/vannysys/github-actions-stockguard/actions/runs/40806026424 |
+| Ejecución fallida intencional (Run #3) | https://github.com/vannysys/github-actions-stockguard/actions/runs/40806246331 |
+| Ejecución corregida (Run #4) | https://github.com/vannysys/github-actions-stockguard/actions/runs/40806682762 |
+| Pull Request con los checks de Actions | https://github.com/vannysys/github-actions-stockguard/pull/1 |
+| Ejecución manual `workflow_dispatch` (Run #7) | https://github.com/vannysys/github-actions-stockguard/actions/runs/40808001873 |
+| Regla propia (sobrestock) | https://github.com/vannysys/github-actions-stockguard/pull/1 |
 
 ## Respuestas
 
 **1. Ejecución exitosa y fallida.**
-La exitosa fue el Run [#1], producido por el commit `chore: estructura inicial` /
-`ci: agregar validacion automatica` [hash]; todos los steps quedaron en verde y el step
-*Ejecutar pruebas* mostró `5 passed`. La fallida fue el Run [#2], producida por el
-commit `test: provocar fallo controlado de CI` [hash], donde cambié la expectativa de
+La ejecución exitosa inicial fue el Run #2, producido por el commit
+`fix: configurar pythonpath para que pytest encuentre src`. El Run #1 había fallado
+porque pytest no encontraba el paquete `src` (`ModuleNotFoundError: No module named
+'src'`); se corrigió agregando `pytest.ini` con `pythonpath = .`. La ejecución fallida
+intencional fue el Run #3, producido por el commit `a6e6fc7`
+(`test: provocar fallo controlado de CI`), donde cambié la expectativa de
 `test_stock_critico` a `"NORMAL"`. El step que determinó el resultado fue
-*Ejecutar pruebas*: compileall pasó, pero pytest terminó con `1 failed, 4 passed`.
+*Ejecutar pruebas*: compileall pasó, pero pytest terminó con `1 failed, 4 passed` y el
+proceso salió con exit code 1. El Run #4 restauró la prueba y volvió a verde.
 
 **2. ¿Por qué pytest local no reemplaza pytest en Actions?**
 Porque mi máquina no es neutral: ya tiene librerías instaladas, archivos que quizás no
